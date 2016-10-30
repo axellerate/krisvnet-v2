@@ -19,6 +19,45 @@ var snowyStyle = {
   height: "800px"
 };
 
+var snowflakes = {};
+var snowflakesIndex = 0;
+var snowflakesNumber = 30;
+
+function Snowflake (ctx, x, y) {
+    this.x = x;
+    this.y = y;
+    var radiusMax = 6;
+    var radiusMin = 2
+    this.radius = Math.random()*(radiusMax-radiusMin+1)+radiusMin;
+    this.life = 0;
+    this.maxLife = 800;
+    snowflakesIndex++;
+    snowflakes[snowflakesIndex] = this;
+    this.id = snowflakesIndex;
+}
+
+Snowflake.prototype.draw = function (ctx) {
+    var velX = 1;
+    var velY = 1; 
+    if (this.radius <= 3) {
+      velY = .5;
+    } else if (this.radius <= 5 && this.radius > 3) {
+      velY = .8;
+    } else {
+      velY = 2;
+    }
+    this.x += Math.random();
+    this.y += velY;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+    ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+    ctx.fill();
+    this.life++;
+    if (this.life >= this.maxLife) {
+      delete snowflakes[this.id];
+    }
+}
+
 class Snowy extends Component {
 
   componentDidMount () {
@@ -27,12 +66,30 @@ class Snowy extends Component {
     
     canvas.width = window.innerWidth;
     canvas.height = 800;
+    canvas.style.marginTop = "-50px";
 
     ctx.fillStyle = "transparent";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    
+    this.snowGenerator(canvas, ctx);
 
+  }
+
+  snowGenerator (canvas, ctx) {
+    setInterval(function () {
+      for (var i = 0; i < snowflakesNumber; i++) {
+        var randomX = Math.random() * window.innerWidth;
+        var randomY = Math.random()*(20-0+1)+0;
+        new Snowflake(ctx, randomX, randomY);
+      }
+    }, 1000);
+
+    setInterval(function () {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (var i in snowflakes) {
+        snowflakes[i].draw(ctx);
+      }
+    }, 24);
   }
 
   render() {
@@ -40,10 +97,10 @@ class Snowy extends Component {
       <div>
         <div style={ snowyStyle }>
           <div style={ cloudStyle }>
-            <canvas id="snow-effects">
+          </div>
+          <canvas id="snow-effects">
 
             </canvas>
-          </div>
         </div>
       </div>
     );
