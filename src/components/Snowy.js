@@ -26,6 +26,7 @@ var canvasBottomStyle = {
   backgroundColor: "#eee" // this is a placeholder - dont know what I want to do here
 };
 
+// Global - didn't know how else to tackle these :(
 var snowflakes = {};
 var snowflakesIndex = 0;
 var snowflakesNumber = 40;
@@ -33,19 +34,27 @@ var snowflakesNumber = 40;
 function Snowflake (ctx, x, y) {
     this.x = x;
     this.y = y;
+    // size between 2 and 12 pixels in diameter
     var radiusMax = 6;
     var radiusMin = 1;
     this.radius = Math.random()*(radiusMax-radiusMin+1)+radiusMin;
+
+    //max life a snowflake will live for
     this.life = 0;
     this.maxLife = 1000;
+
+    // these value help delete the snowflakes after they die
     snowflakesIndex++;
     snowflakes[snowflakesIndex] = this;
     this.id = snowflakesIndex;
 }
 
 Snowflake.prototype.draw = function (ctx) {
-    var velX = 1;
-    var velY = 1; 
+
+    var velX = Math.random()+.5;
+    var velY = 1; // base velocity for safety
+
+    // different falling velocities for different radius sizes
     if (this.radius < 2) {
       velY = .2;
     } else if (this.radius <= 3) {
@@ -55,12 +64,18 @@ Snowflake.prototype.draw = function (ctx) {
     } else {
       velY = 2;
     }
-    this.x += Math.random()+.5;
+
+    // x and y movement based on velocities
+    this.x += velX;
     this.y += velY;
+
+    // draw the new snowflake
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
     ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
     ctx.fill();
+    
+    // if the snowflake is too old, kill it
     this.life++;
     if (this.life >= this.maxLife) {
       delete snowflakes[this.id];
@@ -87,6 +102,7 @@ class Snowy extends Component {
   snowGenerator (canvas, ctx) {
     setInterval(function () {
       for (var i = 0; i < snowflakesNumber; i++) {
+        // place the snowflakes randomly atop the page
         var randomX = Math.random() * window.innerWidth;
         var randomY = Math.random()*(20-0+1)+0;
         new Snowflake(ctx, randomX-200, randomY);
