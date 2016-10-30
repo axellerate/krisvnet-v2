@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
-import Clouds from '../assets/clouds.png';
 
 var headerStyle = {
   width: "100%",
   height: "50px",
-  backgroundColor: "#444444"
-};
-
-var cloudStyle = {
-  backgroundImage: "url(" + Clouds + ")",
-  width: "100%",
-  height: "80px"
+  backgroundColor: "#fff",
+  borderBottom: "1px solid #e7e7e7"
 };
 
 class Header extends Component {
@@ -18,7 +12,6 @@ class Header extends Component {
     return (
       <div>
         <div style={ headerStyle }></div>
-        <div style={ cloudStyle }></div>
       </div>
     );
   }

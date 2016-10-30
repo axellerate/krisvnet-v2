@@ -8,7 +8,8 @@ import Clouds from '../assets/clouds.png';
 var cloudStyle = {
   backgroundImage: "url(" + Clouds + ")",
   width: "100%",
-  height: "80px"
+  height: "80px",
+  marginTop: "80px"
 };
 
 var snowyStyle = {
@@ -19,18 +20,24 @@ var snowyStyle = {
   height: "800px"
 };
 
+var canvasBottomStyle = {
+  width: "100%",
+  height: "50px",
+  backgroundColor: "#eee" // this is a placeholder - dont know what I want to do here
+};
+
 var snowflakes = {};
 var snowflakesIndex = 0;
-var snowflakesNumber = 30;
+var snowflakesNumber = 40;
 
 function Snowflake (ctx, x, y) {
     this.x = x;
     this.y = y;
     var radiusMax = 6;
-    var radiusMin = 2
+    var radiusMin = 1;
     this.radius = Math.random()*(radiusMax-radiusMin+1)+radiusMin;
     this.life = 0;
-    this.maxLife = 800;
+    this.maxLife = 1000;
     snowflakesIndex++;
     snowflakes[snowflakesIndex] = this;
     this.id = snowflakesIndex;
@@ -39,14 +46,16 @@ function Snowflake (ctx, x, y) {
 Snowflake.prototype.draw = function (ctx) {
     var velX = 1;
     var velY = 1; 
-    if (this.radius <= 3) {
+    if (this.radius < 2) {
+      velY = .2;
+    } else if (this.radius <= 3) {
       velY = .5;
     } else if (this.radius <= 5 && this.radius > 3) {
       velY = .8;
     } else {
       velY = 2;
     }
-    this.x += Math.random();
+    this.x += Math.random()+.5;
     this.y += velY;
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
@@ -80,7 +89,7 @@ class Snowy extends Component {
       for (var i = 0; i < snowflakesNumber; i++) {
         var randomX = Math.random() * window.innerWidth;
         var randomY = Math.random()*(20-0+1)+0;
-        new Snowflake(ctx, randomX, randomY);
+        new Snowflake(ctx, randomX-200, randomY);
       }
     }, 1000);
 
@@ -96,12 +105,12 @@ class Snowy extends Component {
     return (
       <div>
         <div style={ snowyStyle }>
-          <div style={ cloudStyle }>
-          </div>
+          <div style={ cloudStyle }></div>
           <canvas id="snow-effects">
 
             </canvas>
         </div>
+        <div style={ canvasBottomStyle }></div>
       </div>
     );
   }
