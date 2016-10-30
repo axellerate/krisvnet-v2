@@ -8,7 +8,7 @@ import Clouds from '../assets/clouds.png';
 var cloudStyle = {
   backgroundImage: "url(" + Clouds + ")",
   width: "100%",
-  height: "80px",
+  height: "100px",
   marginTop: "80px"
 };
 
@@ -17,13 +17,7 @@ var snowyStyle = {
   backgroundSize: "cover",
   marginTop: "-80px",
   width: "100%",
-  height: "800px"
-};
-
-var canvasBottomStyle = {
-  width: "100%",
-  height: "50px",
-  backgroundColor: "#eee" // this is a placeholder - dont know what I want to do here
+  height: window.innerHeight-50 + "px"
 };
 
 // Global - didn't know how else to tackle these :(
@@ -89,8 +83,9 @@ class Snowy extends Component {
         ctx = canvas.getContext("2d");
     
     canvas.width = window.innerWidth;
-    canvas.height = 800;
-    canvas.style.marginTop = "-50px";
+    canvas.height = window.innerHeight-70;
+    canvas.style.marginTop = "-80px";
+    canvas.style.boxShadow = "inset 0 -20px 20px -20px #000000";
 
     ctx.fillStyle = "transparent";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -126,7 +121,6 @@ class Snowy extends Component {
 
             </canvas>
         </div>
-        <div style={ canvasBottomStyle }></div>
       </div>
     );
   }
