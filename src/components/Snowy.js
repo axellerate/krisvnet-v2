@@ -15,6 +15,7 @@ var cloudStyle = {
 var snowyStyle = {
   backgroundImage: "url(" + SnowCover + ")",
   backgroundSize: "cover",
+  backgroundPosition: "center",
   marginTop: "-80px",
   width: "100%",
   height: window.innerHeight-50 + "px"
