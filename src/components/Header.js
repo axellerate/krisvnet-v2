@@ -57,6 +57,12 @@ var blogsListStyle = {
 
 class Header extends Component {
 
+  constructor(props, context) {
+    super(props, context);
+
+    this.toggleAnimation = this.toggleAnimation.bind(this)
+  }
+
   logoClickEvent () {
     function navigateHome () {
       window.location.href = "/";
@@ -90,12 +96,24 @@ class Header extends Component {
     };
   }
 
+  toggleAnimation () {
+    var play = true;
+    if (this.props.playSnowflakes) {
+      play = false;
+    } else {
+      play = true;
+    }
+    this.props.toggleSnowflake(play);
+  }
+
   componentDidMount () {
 
     this.logoClickEvent();
     this.menuClickHoverEvents();
     this.blogsButtonHoverEvent();
-    
+
+    var toggleAnimation = document.getElementById("toggle-animation");
+    toggleAnimation.addEventListener("click", this.toggleAnimation);
   }
 
   render() {
@@ -122,6 +140,11 @@ class Header extends Component {
             </li>
             <li style={ listItemStyle }>
               <a style={ listItemLinkStyle } href="https://www.thoughtsahead.com">About</a>
+            </li>
+            <li style={ listItemStyle }>
+              <a style={ listItemLinkStyle } href="#" id="toggle-animation">
+                {this.props.playSnowflakes == true ? "Pause" : "Play"}
+              </a>
             </li>
           </ul>
           <div style={ currentSeasonStyle } id="current-seasion">Current Seasion: <span>Winter</span></div>

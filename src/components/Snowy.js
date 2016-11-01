@@ -24,7 +24,7 @@ var snowyStyle = {
 // Global - didn't know how else to tackle these :(
 var snowflakes = {};
 var snowflakesIndex = 0;
-var snowflakesNumber = 40;
+var snowflakesNumber = 50;
 
 function Snowflake (ctx, x, y) {
     this.x = x;
@@ -54,7 +54,7 @@ Snowflake.prototype.draw = function (ctx) {
       velY = .2;
     } else if (this.radius <= 3) {
       velY = .5;
-    } else if (this.radius <= 5 && this.radius > 3) {
+    } else if (this.radius <= 5) {
       velY = .8;
     } else {
       velY = 2;
@@ -77,11 +77,17 @@ Snowflake.prototype.draw = function (ctx) {
     }
 }
 
+var generation, animation;
+
 class Snowy extends Component {
 
+  componentWillMount () {
+
+  }
+
   componentDidMount () {
-    var canvas = document.getElementById("snow-effects"),
-        ctx = canvas.getContext("2d");
+    var canvas = document.getElementById("snow-effects");
+    var ctx = canvas.getContext("2d");
     
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight-70;
@@ -90,28 +96,45 @@ class Snowy extends Component {
 
     ctx.fillStyle = "transparent";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    this.snowGenerator(canvas, ctx);
-
+    this.snowGenerator(canvas, ctx, this.props.playSnowflakes);
   }
 
-  snowGenerator (canvas, ctx) {
-    setInterval(function () {
-      for (var i = 0; i < snowflakesNumber; i++) {
-        // place the snowflakes randomly atop the page
-        var randomX = Math.random() * window.innerWidth;
-        var randomY = Math.random()*(20-0+1)+0;
-        new Snowflake(ctx, randomX-200, randomY);
-      }
-    }, 1000);
+  componentDidUpdate () {
+    var canvas = document.getElementById("snow-effects");
+    var ctx = canvas.getContext("2d");
+    this.snowGenerator(canvas, ctx, this.props.playSnowflakes);
+  }
 
-    setInterval(function () {
+  snowGenerator (canvas, ctx, play) {
+    console.log(play);
+    if (play) {
+      console.log("playing");
+      var randomX, randomY;
+      generation = setInterval(function () {
+        for (var i = 0; i < snowflakesNumber; i++) {
+          // place the snowflakes randomly atop the page
+          randomX = Math.random() * window.innerWidth;
+          randomY = Math.random()*(20-0+1)+0;
+          new Snowflake(ctx, randomX-200, randomY);
+        }
+      }, 1000);
+      animation = setInterval(function () {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (var i in snowflakes) {
+          snowflakes[i].draw(ctx);
+        }
+      }, 24);
+    } else {
+      clearInterval(generation);
+      clearInterval(animation);
+      // the below line will delete all snowflakes,
+      // which stops the 'pausing' effect
+      // snowflakes = {};
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (var i in snowflakes) {
-        snowflakes[i].draw(ctx);
-      }
-    }, 24);
+      return;
+    }
   }
+
 
   render() {
     return (
