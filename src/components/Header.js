@@ -11,19 +11,21 @@ var headerStyle = {
 };
 
 var logoStyle = {
+  position: "absolute",
   height: "40px",
   width: "150px",
+  top: "5px",
   backgroundImage: "url(" + Logo + ")",
   backgroundSize: "cover",
-  marginTop: "5px",
+  marginTop: "0px",
   marginLeft: "10px",
   cursor: "pointer"
 };
 
 var currentSeasonStyle = {
   float: "right",
-  marginTop: "-36px",
-  marginRight: "25px",
+  marginTop: "6px",
+  marginRight: "15px",
   padding: "5px",
   border: "3px solid lightblue",
   borderRadius: "5px"
@@ -32,7 +34,7 @@ var currentSeasonStyle = {
 var mainMenuItemsStyle = {
   float: "left",
   marginLeft: "180px",
-  marginTop: "-40px",
+  marginTop: "0px",
   listStyleType: "none",
   display: "inline",
   overflow: "hidden"
@@ -53,15 +55,20 @@ var listItemLinkStyle = {
 var blogsListStyle = {
   listStyleType: "none",
   display: "none",
-  backgroundColor: "#fff"
+  backgroundColor: "#fff",
+  position: "absolute",
+  padding: "0px"
 };
 
 var blogListItemLinkStyle = {
   display: "inline-block",
-  padding: "10px",
+  padding: "20px",
   textDecoration: "none",
   color: "black",
-  cursor: "pointer"
+  cursor: "pointer",
+  listStyleType: "none",
+  marginLeft: "0",
+  borderTop: "1px solid #eee"
 };
 
 class Header extends Component {
@@ -98,6 +105,9 @@ class Header extends Component {
     var blogButtom = document.getElementById("blogs-button");
     var blogsList = document.getElementById("blogs-list");
     blogButtom.onmouseover=function(){
+      blogsList.style.display = "inline-block";
+    };
+    blogsList.onmouseover=function(){
       blogsList.style.display = "inline-block";
     };
     blogsList.onmouseout=function(){
@@ -148,12 +158,20 @@ class Header extends Component {
             <li style={ listItemStyle }>
               <a style={ listItemLinkStyle } href="#blogs" id="blogs-button">Blogs</a>
               <ul style={ blogsListStyle } id="blogs-list">
-                <li><a style={ blogListItemLinkStyle } href="#blogs" id="blogs-button">ThoughtsAhead</a></li>
-                <li><a style={ blogListItemLinkStyle } href="#blogs" id="blogs-button">WordsEachDay</a></li>
+                <li><a style={ blogListItemLinkStyle } 
+                  href="https://www.thoughtsahead.com"
+                  target="_blank" 
+                  className="blogs-list-button">ThoughtsAhead</a></li>
+                <li><a style={ blogListItemLinkStyle } 
+                  href="https://www.wordseachday.com"
+                  target="_blank"
+                  className="blogs-list-button">WordsEachDay</a></li>
               </ul>
             </li>
             <li style={ listItemStyle }>
-              <a style={ listItemLinkStyle } href="https://www.wordseachday.com">LinkedIn</a>
+              <a style={ listItemLinkStyle } 
+                href="https://ca.linkedin.com/in/kris-vukasinovic-975697103"
+                target="_blank">LinkedIn</a>
             </li>
             <li style={ listItemStyle }>
               <a style={ listItemLinkStyle } href="https://www.thoughtsahead.com">About</a>
@@ -166,7 +184,10 @@ class Header extends Component {
               </a>
             </li>
           </ul>
-          <div style={ currentSeasonStyle } id="current-seasion">Current Season: <span>Winter</span></div>
+          <div style={ currentSeasonStyle } id="current-seasion">
+            <b>Current Season: </b> 
+            <span>Winter <FontAwesome name='snowflake-o' /></span>
+          </div>
         </div>
       </div>
     );

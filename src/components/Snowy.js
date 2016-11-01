@@ -82,7 +82,7 @@ var generation, animation;
 class Snowy extends Component {
 
   componentWillMount () {
-
+    
   }
 
   componentDidMount () {
