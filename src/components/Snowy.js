@@ -106,9 +106,7 @@ class Snowy extends Component {
   }
 
   snowGenerator (canvas, ctx, play) {
-    console.log(play);
     if (play) {
-      console.log("playing");
       var randomX, randomY;
       generation = setInterval(function () {
         for (var i = 0; i < snowflakesNumber; i++) {
@@ -141,9 +139,7 @@ class Snowy extends Component {
       <div>
         <div style={ snowyStyle }>
           <div style={ cloudStyle }></div>
-          <canvas id="snow-effects">
-
-            </canvas>
+          <canvas id="snow-effects"></canvas>
         </div>
       </div>
     );

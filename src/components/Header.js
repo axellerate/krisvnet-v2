@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+var FontAwesome = require('react-fontawesome');
 import Logo from '../assets/krisv-logo.png';
 
 
@@ -124,6 +125,14 @@ class Header extends Component {
     toggleAnimation.addEventListener("click", this.toggleAnimation);
   }
 
+  renderPlayButton () {
+    return (<FontAwesome name='play' />);
+  }
+
+  renderPauseButton () {
+    return (<FontAwesome name='pause' />);
+  }
+
   render() {
     return (
       <div>
@@ -151,7 +160,9 @@ class Header extends Component {
             </li>
             <li style={ listItemStyle }>
               <a style={ listItemLinkStyle } href="#" id="toggle-animation">
-                {this.props.playSnowflakes == true ? "Pause" : "Play"}
+                {this.props.playSnowflakes == true ? 
+                                              this.renderPauseButton() : 
+                                              this.renderPlayButton()}
               </a>
             </li>
           </ul>
