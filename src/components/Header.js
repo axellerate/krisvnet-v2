@@ -21,7 +21,7 @@ var logoStyle = {
 
 var currentSeasonStyle = {
   float: "right",
-  marginTop: "-35px",
+  marginTop: "-36px",
   marginRight: "25px",
   padding: "5px",
   border: "3px solid lightblue",
@@ -53,6 +53,14 @@ var blogsListStyle = {
   listStyleType: "none",
   display: "none",
   backgroundColor: "#fff"
+};
+
+var blogListItemLinkStyle = {
+  display: "inline-block",
+  padding: "10px",
+  textDecoration: "none",
+  color: "black",
+  cursor: "pointer"
 };
 
 class Header extends Component {
@@ -123,16 +131,16 @@ class Header extends Component {
           <div style={ logoStyle } id="logo"></div>
           <ul style={ mainMenuItemsStyle } id="main-menu-items">
             <li style={ listItemStyle }>
-              <a style={ listItemLinkStyle } href="#">Projects</a>
+              <a style={ listItemLinkStyle } href="#projects">Projects</a>
             </li>
             <li style={ listItemStyle }>
-              <a style={ listItemLinkStyle } href="#">Past Work</a>
+              <a style={ listItemLinkStyle } href="#past-work">Past Work</a>
             </li>
             <li style={ listItemStyle }>
-              <a style={ listItemLinkStyle } href="#" id="blogs-button">Blogs</a>
+              <a style={ listItemLinkStyle } href="#blogs" id="blogs-button">Blogs</a>
               <ul style={ blogsListStyle } id="blogs-list">
-                <li>ThoughtsAhead</li>
-                <li>WordsEachDay</li>
+                <li><a style={ blogListItemLinkStyle } href="#blogs" id="blogs-button">ThoughtsAhead</a></li>
+                <li><a style={ blogListItemLinkStyle } href="#blogs" id="blogs-button">WordsEachDay</a></li>
               </ul>
             </li>
             <li style={ listItemStyle }>
@@ -147,7 +155,7 @@ class Header extends Component {
               </a>
             </li>
           </ul>
-          <div style={ currentSeasonStyle } id="current-seasion">Current Seasion: <span>Winter</span></div>
+          <div style={ currentSeasonStyle } id="current-seasion">Current Season: <span>Winter</span></div>
         </div>
       </div>
     );
